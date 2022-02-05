@@ -54,6 +54,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>aws-ses</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

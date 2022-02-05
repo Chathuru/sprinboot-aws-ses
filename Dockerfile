@@ -7,11 +7,11 @@ LABEL version=$VERSION
 
 RUN mkdir /opt/app/
 
-COPY target/xapi-platform-service.jar /opt/app/
+COPY target/aws-ses.jar /opt/app/
 COPY ${DEPENDENCY}/BOOT-INF/classes /opt/app
 COPY ${DEPENDENCY}/BOOT-INF/lib /opt/app/lib
 COPY ${DEPENDENCY}/META-INF /opt/app/META-INF
 
 WORKDIR "/opt/app/"
 
-CMD ["java", "-jar", "xapi-platform-service.jar"]
+CMD ["java", "-jar", "aws-ses.jar"]
