@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.WebIdentityTokenFileCredentialsProvider;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.ses.SesClient;
@@ -29,6 +30,7 @@ public class SendEmail {
         Region region = Region.US_EAST_1;
         SesClient client = SesClient.builder()
                 .region(region)
+                .credentialsProvider(WebIdentityTokenFileCredentialsProvider.create())
                 .build();
 
         send(client);
