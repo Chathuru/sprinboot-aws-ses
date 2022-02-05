@@ -2,6 +2,7 @@ package com.chathuru.sesclient;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import software.amazon.awssdk.auth.credentials.WebIdentityTokenFileCredentialsProvider;
@@ -24,26 +25,26 @@ import java.util.Properties;
 @RequestMapping(path="/")
 public class SendEmail {
 
-    @GetMapping(path="/send")
-    public @ResponseBody String sendEmail() throws MessagingException, IOException {
+    @GetMapping(path="/send/{sender}/{receiver}")
+    public @ResponseBody String sendEmail(@PathVariable String sender, @PathVariable String receiver) throws MessagingException, IOException {
         Region region = Region.US_EAST_1;
         SesClient client = SesClient.builder()
                 .region(region)
                 .credentialsProvider(WebIdentityTokenFileCredentialsProvider.create())
                 .build();
 
-        send(client);
+        send(client, sender, receiver);
 
         return "Send";
     }
 
-    public static void send(SesClient client) throws AddressException, MessagingException, IOException {
+    public static void send(SesClient client, String sender, String receiver) throws AddressException, MessagingException, IOException {
         Session session = Session.getDefaultInstance(new Properties());
         MimeMessage message = new MimeMessage(session);
 
         message.setSubject("Testing AWS SES Permissions", "UTF-8");
-        message.setFrom(new InternetAddress("123@gmail.com"));
-        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("456@gmail.com"));
+        message.setFrom(new InternetAddress(sender));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(receiver));
         MimeMultipart msgBody = new MimeMultipart("alternative");
         MimeBodyPart wrap = new MimeBodyPart();
 
