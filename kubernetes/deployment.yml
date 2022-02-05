@@ -25,7 +25,6 @@ spec:
         - name: docker
       serviceAccountName: xapi-notification-service-account
 
-
 ---
 apiVersion: v1
 kind: Service
