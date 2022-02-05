@@ -30,7 +30,6 @@ public class SendEmail {
         Region region = Region.US_EAST_1;
         SesClient client = SesClient.builder()
                 .region(region)
-                .credentialsProvider(WebIdentityTokenFileCredentialsProvider.create())
                 .build();
 
         send(client);
