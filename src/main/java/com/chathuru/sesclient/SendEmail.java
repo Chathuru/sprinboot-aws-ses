@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.WebIdentityTokenFileCredentialsProvider;
 import software.amazon.awssdk.core.SdkBytes;
 import software.amazon.awssdk.regions.Region;
@@ -43,8 +42,8 @@ public class SendEmail {
         MimeMessage message = new MimeMessage(session);
 
         message.setSubject("Testing AWS SES Permissions", "UTF-8");
-        message.setFrom(new InternetAddress("amal.l@x-venture.io"));
-        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("chathuru1993@gmail.com"));
+        message.setFrom(new InternetAddress("123@gmail.com"));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("456@gmail.com"));
         MimeMultipart msgBody = new MimeMultipart("alternative");
         MimeBodyPart wrap = new MimeBodyPart();
 
