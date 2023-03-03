@@ -7,11 +7,8 @@ LABEL version=$VERSION
 
 RUN mkdir /opt/app/
 
-COPY target/aws-ses.jar /opt/app/
-COPY ${DEPENDENCY}/BOOT-INF/classes /opt/app
-COPY ${DEPENDENCY}/BOOT-INF/lib /opt/app/lib
-COPY ${DEPENDENCY}/META-INF /opt/app/META-INF
+COPY target/aws-s3.jar /opt/app/
 
 WORKDIR "/opt/app/"
 
-CMD ["java", "-jar", "aws-ses.jar"]
+CMD ["java", "-jar", "aws-s3.jar"]
