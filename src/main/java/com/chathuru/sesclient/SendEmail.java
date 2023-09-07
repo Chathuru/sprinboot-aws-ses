@@ -11,7 +11,12 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.ses.SesClient;
 import software.amazon.awssdk.services.ses.model.RawMessage;
 import software.amazon.awssdk.services.ses.model.SendRawEmailRequest;
-
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.sns.SnsClient;
+import software.amazon.awssdk.services.sns.model.PublishRequest;
+import software.amazon.awssdk.services.sns.model.PublishResponse;
+import software.amazon.awssdk.services.sns.model.SnsException;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -27,13 +32,29 @@ public class SendEmail {
 
     @GetMapping(path="/send/{sender}/{receiver}")
     public @ResponseBody String sendEmail(@PathVariable String sender, @PathVariable String receiver) throws MessagingException, IOException {
-        Region region = Region.US_EAST_1;
+        //Region region = Region.US_EAST_1;
         SesClient client = SesClient.builder()
-                .region(region)
-                .credentialsProvider(WebIdentityTokenFileCredentialsProvider.create())
+                //.region(region)
+                //.credentialsProvider(WebIdentityTokenFileCredentialsProvider.create())
                 .build();
 
         send(client, sender, receiver);
+
+        return "Send";
+    }
+
+    @GetMapping(path="/sms/{phone}")
+    public @ResponseBody String pubTextSMS(@PathVariable String phone ) throws MessagingException, IOException {
+        PublishRequest request = PublishRequest.builder()
+                .message("HI")
+                .phoneNumber(phone)
+                .build();
+
+        SnsClient snsClient = SnsClient.builder()
+            .build();
+
+        PublishResponse result = snsClient.publish(request);
+        snsClient.close();
 
         return "Send";
     }

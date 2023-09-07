@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: aws-ses-deployment
-  namespace: dev
 spec:
   replicas: 1
   selector:
@@ -15,15 +14,13 @@ spec:
     spec:
       containers:
         - name: xapi-notification-service
-          image: chathuru/springboot-aws-ses
+          image: chathuru/springboot-aws-ses:v2
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
               name: http
               protocol: TCP
-      imagePullSecrets:
-        - name: docker
-      serviceAccountName: xapi-notification-service-account
+      serviceAccountName: notification
 
 ---
 apiVersion: v1
